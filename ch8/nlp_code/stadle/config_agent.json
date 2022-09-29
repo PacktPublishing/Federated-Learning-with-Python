@@ -1,0 +1,12 @@
+{
+    "model_path": "./data/agent",
+    "aggr_ip": "localhost",
+    "reg_port": "8765",
+    "token": "stadle12345",
+    "base_model": {
+        "model_fn": "SSTModel",
+        "model_fn_src": "sst_model",
+        "model_format": "Keras",
+        "model_name": "Keras-SST-Model"
+    }
+}

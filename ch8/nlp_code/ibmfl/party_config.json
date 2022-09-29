@@ -1,0 +1,44 @@
+{
+    "aggregator":
+        {
+            "ip": "127.0.0.1",
+            "port": 5000
+        },
+    "connection": {
+        "info": {
+            "ip": "127.0.0.1",
+            "port": 8085,
+            "id": "party",
+            "tls_config": {
+                "enable": "false"
+            }
+        },
+        "name": "FlaskConnection",
+        "path": "ibmfl.connection.flask_connection",
+        "sync": "false"
+    },
+    "data": {
+        "info": {
+            "client_id": 0,
+            "num_clients": 3
+        },
+        "name": "SSTDataHandler",
+        "path": "sst_data_handler"
+    },
+    "local_training": {
+        "name": "LocalTrainingHandler",
+        "path": "ibmfl.party.training.local_training_handler"
+    },
+    "model": {
+        "name": "TensorFlowFLModel",
+        "path": "ibmfl.model.tensorflow_fl_model",
+        "spec": {
+            "model-name": "sst_model",
+            "model_definition": "sst_model_save_dir"
+        }
+    },
+    "protocol_handler": {
+        "name": "PartyProtocolHandler",
+        "path": "ibmfl.party.party_protocol_handler"
+    }
+}

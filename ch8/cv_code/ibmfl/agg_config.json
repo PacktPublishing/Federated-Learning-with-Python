@@ -1,0 +1,38 @@
+{
+    "connection": {
+        "info": {
+            "ip": "127.0.0.1",
+            "port": 5000,
+            "tls_config": {
+                "enable": "false"
+            }
+        },
+        "name": "FlaskConnection",
+        "path": "ibmfl.connection.flask_connection",
+        "sync": "False"
+    },
+    "fusion": {
+        "name": "IterAvgFusionHandler",
+        "path": "ibmfl.aggregator.fusion.iter_avg_fusion_handler"
+    },
+    "hyperparams": {
+        "global": {
+            "max_timeout": 10800,
+            "num_parties": 1,
+            "perc_quorum": 1,
+            "rounds": 30
+        },
+        "local": {
+            "optimizer": {
+                "lr": 0.001
+            },
+            "training": {
+                "epochs": 1
+            }
+        }
+    },
+    "protocol_handler": {
+        "name": "ProtoHandler",
+        "path": "ibmfl.aggregator.protohandler.proto_handler"
+    }
+}

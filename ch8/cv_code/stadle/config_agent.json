@@ -1,0 +1,12 @@
+{
+    "model_path": "./data/agent",
+    "aggr_ip": "localhost",
+    "reg_port": "8765",
+    "token": "stadle12345",
+    "base_model": {
+        "model_fn": "vgg16",
+        "model_fn_src": "torchvision.models",
+        "model_format": "PyTorch",
+        "model_name": "PyTorch-VGG-Model"
+    }
+}
