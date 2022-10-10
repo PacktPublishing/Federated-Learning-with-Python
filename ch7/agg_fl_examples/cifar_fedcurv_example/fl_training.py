@@ -9,10 +9,7 @@ import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
 
-from vgg import VGG
-
 from stadle import BasicClient
-
 
 def data_processing(data_save_path: str = "./data", max_workers=2, batch_size=64, args=None):
 
@@ -98,7 +95,7 @@ num_epochs = 200
 lr = 0.001
 momentum = 0.9
 
-model = VGG('VGG16').to(device)
+model = torchvision.models.vgg16().to(device)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=lr,
@@ -111,10 +108,8 @@ fedcurv_lambda = 1.0
 fisher_info_params = {f'fedcurv_{c}_{i}':np.zeros(tuple(param.data.size())) for i,param in enumerate(model.parameters()) for c in ('u','v')}
 agg_fisher_info_params = None
 
-client_config_path = r'config/config_agent.json'
-stadle_client = BasicClient(config_file=client_config_path)
-
-stadle_client.set_bm_obj(model)
+client_config_path = r'config_agent.json'
+stadle_client = BasicClient(config_file=client_config_path, agent_name=f'agent{client_num}')
 
 for epoch in range(num_epochs):
     if (epoch % 2 == 0):

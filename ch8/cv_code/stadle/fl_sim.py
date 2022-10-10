@@ -10,7 +10,7 @@ import torchvision
 import torchvision.transforms as transforms
 from torchvision.models import vgg16
 
-import flwr as fl
+from stadle import BasicClient
 
 
 data_save_path = './data'
@@ -83,53 +83,62 @@ model = vgg16()
 optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
 criterion = nn.CrossEntropyLoss()
 
-class CifarClient(fl.client.NumPyClient):
-    def get_parameters(self, config):
-        return [val.numpy() for _, val in model.state_dict().items()]
+client_config_path = r'config_agent.json'
+stadle_client = BasicClient(config_file=client_config_path, agent_name=f'agent{client_num}')
 
-    def set_parameters(self, parameters):
-        params_dict = zip(model.state_dict().keys(), parameters)
-        state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
+for epoch in range(num_epochs):
+    if (epoch % 2 == 0):
+        # Don't send model at beginning of training
+        if (epoch != 0):
+            stadle_client.send_trained_model(model)
+
+        state_dict = stadle_client.wait_for_sg_model().state_dict()
         model.load_state_dict(state_dict)
 
-    def fit(self, parameters, config):
-        self.set_parameters(parameters)
+    print('\nEpoch: %d' % (epoch + 1))
 
-        model.train()
+    model = model.to(device)
 
-        for epoch in range(1):  # loop over the dataset multiple times
-            for batch_idx, (inputs, targets) in enumerate(trainloader):
-                print(batch_idx)
-                optimizer.zero_grad()
-                outputs = model(inputs)
-                loss = criterion(outputs, targets)
-                print(loss.item())
-                loss.backward()
-            optimizer.step()
+    model.train()
+    train_loss = 0
+    correct = 0
+    total = 0
 
-        return self.get_parameters({}), len(trainloader), {}
+    for batch_idx, (inputs, targets) in enumerate(trainloader):
+        inputs, targets = inputs.to(device), targets.to(device)
 
-    def evaluate(self, parameters, config):
-        self.set_parameters(parameters)
+        optimizer.zero_grad()
+        outputs = model(inputs)
+        loss = criterion(outputs, targets)
 
+        loss.backward()
+        optimizer.step()
+
+        _, predicted = outputs.max(1)
+        total += targets.size(0)
+        correct += predicted.eq(targets).sum().item()
+
+        sys.stdout.write('\r'+f"\rEpoch Accuracy: {(100*correct/total):.2f}%")
+    print('\n')
+
+    if ((epoch + 0) % 5 == 0):
         model.eval()
-
+        test_loss = 0
         correct = 0
         total = 0
-        overall_accuracy = 0
 
         with torch.no_grad():
-            for (inputs, targets) in testloader:
+            for batch_idx, (inputs, targets) in enumerate(testloader):
+                inputs, targets = inputs.to(device), targets.to(device)
                 outputs = model(inputs)
-                _, predicted = torch.max(outputs.data, 1)
+                loss = criterion(outputs, targets)
+
+                test_loss += loss.item()
+                _, predicted = outputs.max(1)
                 total += targets.size(0)
-                correct += (predicted == targets).sum().item()
+                correct += predicted.eq(targets).sum().item()
 
-        overall_accuracy = 100 * correct / total
+        acc = 100.*correct/total
+        print(f"Accuracy on val set: {acc}%")
 
-        print(overall_accuracy)
-
-        return 0.0, len(testloader), {'acc': overall_accuracy}
-        
-
-fl.client.start_numpy_client(server_address="[::]:8080", client=CifarClient())
+stadle_client.disconnect()

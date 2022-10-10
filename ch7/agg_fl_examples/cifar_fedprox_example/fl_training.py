@@ -1,12 +1,11 @@
 import sys
+import argparse
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
-
-from vgg import VGG
 
 from stadle import BasicClient
 
@@ -40,19 +39,21 @@ num_rnds = 30
 lr = 0.001
 momentum = 0.9
 
-model = VGG('VGG16').to(device)
-agg_model = VGG('VGG16').to(device)
+model = torchvision.models.vgg16().to(device)
+agg_model = torchvision.models.vgg16().to(device)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=lr,
                     momentum=momentum, weight_decay=5e-4)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
 
+parser = argparse.ArgumentParser(description='STADLE CIFAR10 Training')
+parser.add_argument('--agent_name', default='default_agent')
+args = parser.parse_args()
+agent_name = args.agent_name
 
-client_config_path = r'config/config_agent.json'
-stadle_client = BasicClient(config_file=client_config_path)
-
-stadle_client.set_bm_obj(model)
+client_config_path = r'config_agent.json'
+stadle_client = BasicClient(config_file=client_config_path, agent_name=agent_name)
 
 
 def gamma_inexact_solution_found(curr_grad, agg_grad, gamma):
