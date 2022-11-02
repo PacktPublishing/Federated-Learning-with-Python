@@ -60,7 +60,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 
 ## Get to Know the Authors
 
-**Kiyoshi Nakayama**
+**Kiyoshi Nakayama**,
 PhD, is the founder and CEO of TieSet Inc., which leads the development and
 dissemination of one of the most advanced distributed and federated learning platforms in the world.
 Before founding TieSet, he was a research scientist at NEC Laboratories America, renowned for having
