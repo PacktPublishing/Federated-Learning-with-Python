@@ -27,7 +27,7 @@ alt="https://www.packtpub.com/" border="5" /></a>
 All of the code is organized into folders.
 
 The code will look like the following:
-
+```
 import tensorflow as tf
 from tensorflow import keras
 from sst_model import SSTModel
