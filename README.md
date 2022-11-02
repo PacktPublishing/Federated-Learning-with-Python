@@ -49,6 +49,8 @@ You can install the server-side code provided in the GitHub repo in any cloud en
 Amazon Web Services (AWS) or Google Cloud Platform (GCP), with proper security settings to
 set up distributed learning environments.
 
+Please also check the repository for the most updated code at https://github.com/tie-set/simple-fl.
+
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://packt.link/qh1su).
 
