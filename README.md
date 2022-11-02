@@ -1,4 +1,4 @@
-# Comet for Data Science
+# Federated Learning with Python
 
 <a href="https://www.packtpub.com/product/federated-learning-with-python/9781803247106?utm_source=github&utm_medium=repository&utm_campaign=9781803247106"><img src="https://static.packt-cdn.com/products/9781803247106/cover/smaller" alt="Federated Learning with Python" height="256px" align="right"></a>
 
