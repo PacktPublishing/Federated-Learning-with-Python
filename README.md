@@ -58,9 +58,10 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 
 * Applied Machine Learning Explainability Techniques [[Packt]](https://www.packtpub.com/product/applied-machine-learning-explainability-techniques/9781803246154) [[Amazon]](https://www.amazon.com/dp/B0B2PTF5PC)
 
-## Get to Know the Author
+## Get to Know the Authors
+
 **Kiyoshi Nakayama**
-, PhD, is the founder and CEO of TieSet Inc., which leads the development and
+PhD, is the founder and CEO of TieSet Inc., which leads the development and
 dissemination of one of the most advanced distributed and federated learning platforms in the world.
 Before founding TieSet, he was a research scientist at NEC Laboratories America, renowned for having
 the world’s top-notch machine learning research group of researchers. He was also a postdoctoral
@@ -68,6 +69,7 @@ researcher at Fujitsu Laboratories of America, where he implemented a distribute
 energy. He has published several international articles and patents and received the best paper award
 twice in his career. Kiyoshi received his PhD in computer science from the University of California,
 Irvine. 
+
 **George Jeno**
 is a co-founder of TieSet Inc. and has been a tech lead for the development of the
 STADLE federated learning platform. He has a deep understanding of machine learning theory and
