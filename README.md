@@ -24,13 +24,12 @@ alt="https://www.packtpub.com/" border="5" /></a>
 
 
 ## Instructions and Navigations
-All of the code is organized into folders.
 
 The code will look like the following:
 ```
 import tensorflow as tf
 from tensorflow import keras
-from sst_model import SSTModel
+from sst_model import SSTModel, load_sst_data
 ```
 
 **Following is what you need for this book:**
